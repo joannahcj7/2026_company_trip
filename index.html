@@ -353,7 +353,8 @@
       });
 
       window.addEventListener("message", (event) => {
-        if (event.source !== frame.contentWindow || !event.data ||
+        if ((event.origin !== "https://script.google.com" &&
+             !event.origin.endsWith(".googleusercontent.com")) || !event.data ||
             event.data.type !== "employee-trip-registration" ||
             event.data.requestId !== activeRequestId) return;
 
