@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff8eb">
+    <meta name="description" content="2026 公司員工旅遊活動資訊與報名表單">
+    <title>2026 公司員工旅遊</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+        color: #23332d;
+        background: #fff8eb;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        --green: #245c45;
+        --orange: #e87945;
+        --muted: #66736c;
+        --paper: #fffdf8;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(ellipse at 8% 12%, rgb(255 222 165 / 34%), transparent 30rem),
+          radial-gradient(ellipse at 92% 38%, rgb(203 230 190 / 35%), transparent 28rem),
+          #fff8eb;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 38px 0 64px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 0 4px 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--orange);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--green);
+        font-size: clamp(2rem, 5vw, 3.45rem);
+        letter-spacing: 0.035em;
+        line-height: 1.15;
+      }
+
+      .title-note {
+        flex: 0 0 auto;
+        border: 1px solid #e8d8ba;
+        border-radius: 999px;
+        padding: 10px 16px;
+        color: #755e3e;
+        background: rgb(255 253 248 / 74%);
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+        margin: 0 0 28px;
+        border: 7px solid var(--paper);
+        border-radius: 28px;
+        background: #d6dfca;
+        box-shadow: 0 16px 40px rgb(68 72 49 / 12%);
+      }
+
+      .hero img {
+        display: block;
+        width: 100%;
+        height: clamp(300px, 42vw, 470px);
+        object-fit: cover;
+        object-position: center 54%;
+      }
+
+      .schedule {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0;
+        padding: 12px;
+        border: 1px solid rgb(255 255 255 / 55%);
+        border-radius: 18px;
+        background: rgb(255 253 248 / 94%);
+        box-shadow: 0 8px 26px rgb(28 43 34 / 15%);
+        list-style: none;
+        backdrop-filter: blur(8px);
+      }
+
+      .schedule li { min-width: 0; padding: 5px 7px; }
+      .schedule time {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--orange);
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+      .schedule span { font-size: 0.88rem; font-weight: 700; }
+
+      .details-row {
+        display: grid;
+        grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+        align-items: start;
+        gap: 22px;
+      }
+
+      .card {
+        border: 1px solid #eee5d5;
+        border-radius: 24px;
+        padding: clamp(22px, 3vw, 34px);
+        background: var(--paper);
+        box-shadow: 0 12px 32px rgb(68 72 49 / 7%);
+      }
+
+      .section-tag {
+        margin: 0 0 10px;
+        color: var(--orange);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        color: var(--green);
+        font-size: clamp(1.45rem, 3vw, 1.85rem);
+      }
+
+      .intro p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+
+      .intro .highlight {
+        margin-top: 22px;
+        border-radius: 16px;
+        padding: 16px 18px;
+        color: #694d2e;
+        background: #fff2d9;
+        font-weight: 700;
+        line-height: 1.7;
+      }
+
+      .form-intro {
+        margin: -4px 0 22px;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 17px 14px;
+      }
+
+      .field { display: grid; gap: 7px; }
+      .field.full { grid-column: 1 / -1; }
+      label { font-size: 0.9rem; font-weight: 700; }
+      .required { color: #d25336; }
+
+      input {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid #ddd8cb;
+        border-radius: 12px;
+        padding: 10px 13px;
+        color: #23332d;
+        background: #fffefa;
+        font: inherit;
+        transition: border-color 150ms ease, box-shadow 150ms ease;
+      }
+
+      input:focus {
+        border-color: #5a9676;
+        outline: 0;
+        box-shadow: 0 0 0 3px rgb(90 150 118 / 18%);
+      }
+
+      .submit-button {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 21px;
+        border: 0;
+        border-radius: 14px;
+        color: white;
+        background: var(--green);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 150ms ease, transform 150ms ease;
+      }
+
+      .submit-button:hover { background: #174a35; transform: translateY(-1px); }
+      .submit-button:disabled { opacity: 0.65; cursor: wait; transform: none; }
+      .status { min-height: 1.5em; margin: 12px 0 0; font-size: 0.9rem; line-height: 1.6; }
+      .status[data-state="error"] { color: #b4382a; }
+      .status[data-state="success"] { color: var(--green); }
+      .privacy-note { margin: 10px 0 0; color: #78827b; font-size: 0.78rem; line-height: 1.6; }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
+      }
+
+      @media (max-width: 760px) {
+        .page { width: min(100% - 28px, 560px); padding-top: 26px; }
+        .title-row { align-items: flex-start; flex-direction: column; gap: 13px; padding-bottom: 19px; }
+        .hero { border-width: 5px; border-radius: 22px; }
+        .hero img { height: 350px; }
+        .schedule { right: 10px; bottom: 10px; left: 10px; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 9px; }
+        .schedule li { padding: 4px 6px; }
+        .schedule span { font-size: 0.82rem; }
+        .details-row { grid-template-columns: 1fr; gap: 16px; }
+      }
+
+      @media (max-width: 420px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .field.full { grid-column: auto; }
+        .hero img { height: 390px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="title-row">
+        <div>
+          <p class="eyebrow">A DAY TOGETHER · 2026</p>
+          <h1>2026 公司員工旅遊</h1>
+        </div>
+        <span class="title-note">一起出發，留下美好回憶</span>
+      </header>
+
+      <figure class="hero" aria-label="活動圖片與當日流程">
+        <img src="./2026員工旅遊測試.jpg" alt="2026 公司員工旅遊活動風景">
+        <ol class="schedule" aria-label="活動流程">
+          <li><time>08:00</time><span>報到</span></li>
+          <li><time>09:00</time><span>場次 1</span></li>
+          <li><time>10:00</time><span>休息</span></li>
+          <li><time>10:30</time><span>場次 2</span></li>
+          <li><time>11:30</time><span>Q&amp;A</span></li>
+          <li><time>12:00</time><span>活動結束</span></li>
+        </ol>
+      </figure>
+
+      <div class="details-row">
+        <section class="card intro" aria-labelledby="event-heading">
+          <p class="section-tag">LET'S GO</p>
+          <h2 id="event-heading">活動內容</h2>
+          <p>忙碌的日常裡，留一天給自己，也和同事一起充電、交流、享受旅程。歡迎填寫右側表單報名，期待和你一起出發！</p>
+          <p class="highlight">活動流程<br>08:00 報到　·　09:00 場次 1<br>10:00 休息　·　10:30 場次 2<br>11:30 Q&amp;A　·　12:00 活動結束</p>
+        </section>
+
+        <section class="card registration" aria-labelledby="registration-heading">
+          <p class="section-tag">SAVE YOUR SPOT</p>
+          <h2 id="registration-heading">員工旅遊報名</h2>
+          <p class="form-intro">請填寫報名資料，標示 <span class="required">*</span> 為必填。</p>
+          <form id="registration-form" method="post" target="submission-frame">
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">姓名 <span class="required">*</span></label>
+                <input id="name" name="name" autocomplete="name" required maxlength="100">
+              </div>
+              <div class="field">
+                <label for="phone">電話 <span class="required">*</span></label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" required maxlength="30">
+              </div>
+              <div class="field full">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" maxlength="254">
+              </div>
+              <div class="field">
+                <label for="unit">單位</label>
+                <input id="unit" name="unit" autocomplete="organization" maxlength="100">
+              </div>
+              <div class="field">
+                <label for="job-title">職稱</label>
+                <input id="job-title" name="jobTitle" maxlength="100">
+              </div>
+            </div>
+            <input id="request-id" name="requestId" type="hidden">
+            <button class="submit-button" type="submit">送出報名</button>
+            <p id="form-status" class="status" role="status" aria-live="polite"></p>
+            <p class="privacy-note">送出後，報名資料將儲存於活動主辦方的 Google 試算表。</p>
+          </form>
+          <iframe class="visually-hidden" name="submission-frame" title="報名送出回覆"></iframe>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const SCRIPT_URL = "";
+      const form = document.querySelector("#registration-form");
+      const status = document.querySelector("#form-status");
+      const button = form.querySelector("button[type=submit]");
+      const frame = document.querySelector('iframe[name="submission-frame"]');
+      let activeRequestId = "";
+      let responseTimer;
+
+      function showStatus(message, state) {
+        status.textContent = message;
+        status.dataset.state = state;
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!SCRIPT_URL) {
+          showStatus("報名系統尚未完成部署，請稍後再試。", "error");
+          return;
+        }
+
+        activeRequestId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        form.elements.requestId.value = activeRequestId;
+        form.action = SCRIPT_URL;
+        button.disabled = true;
+        showStatus("資料送出中，請稍候…", "pending");
+        form.submit();
+
+        window.clearTimeout(responseTimer);
+        responseTimer = window.setTimeout(() => {
+          if (!activeRequestId) return;
+          activeRequestId = "";
+          button.disabled = false;
+          showStatus("目前無法確認送出結果，請稍後再試或聯絡活動主辦方。", "error");
+        }, 20000);
+      });
+
+      window.addEventListener("message", (event) => {
+        if (event.source !== frame.contentWindow || !event.data ||
+            event.data.type !== "employee-trip-registration" ||
+            event.data.requestId !== activeRequestId) return;
+
+        window.clearTimeout(responseTimer);
+        activeRequestId = "";
+        button.disabled = false;
+
+        if (event.data.ok) {
+          form.reset();
+          showStatus("報名成功！期待與你一同出發。", "success");
+        } else {
+          showStatus(event.data.message || "報名未成功，請稍後再試。", "error");
+        }
+      });
+    </script>
+  </body>
+</html>
