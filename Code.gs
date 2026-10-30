@@ -50,7 +50,7 @@ function doPost(event) {
 
   return HtmlService.createHtmlOutput(
     '<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><script>' +
-    'window.parent.postMessage(' + JSON.stringify({
+    'window.top.postMessage(' + JSON.stringify({
       type: 'employee-trip-registration',
       requestId: requestId,
       ok: result.ok,
@@ -77,7 +77,22 @@ function getOrCreateSpreadsheet_() {
 
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) {
-    sheet = spreadsheet.insertSheet(SHEET_NAME);
+    const defaultSheet =
+      spreadsheet.getSheetByName('工作表1') || spreadsheet.getSheetByName('Sheet1');
+    if (defaultSheet && defaultSheet.getLastRow() === 0) {
+      defaultSheet.setName(SHEET_NAME);
+      sheet = defaultSheet;
+    } else {
+      sheet = spreadsheet.insertSheet(SHEET_NAME);
+    }
+  }
+
+  const unusedDefaultSheet =
+    spreadsheet.getSheetByName('工作表1') || spreadsheet.getSheetByName('Sheet1');
+  if (unusedDefaultSheet &&
+      unusedDefaultSheet.getSheetId() !== sheet.getSheetId() &&
+      unusedDefaultSheet.getLastRow() === 0) {
+    spreadsheet.deleteSheet(unusedDefaultSheet);
   }
 
   sheet.getRange('A:E').setNumberFormat('@');
